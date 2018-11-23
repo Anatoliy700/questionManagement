@@ -1,0 +1,12 @@
+
+.questionManagementIndicate {
+    height: 1em;
+    width: 1em;
+    background-color: red;
+    margin: auto 0;
+    border-radius: 1em;
+}
+
+.questionManagementIndicate.active {
+    background-color: #31d731;
+}
