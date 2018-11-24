@@ -8,8 +8,8 @@ let questionManagement = {
     clickByParent: true, // если true то клик происходит по родителю целевой кнопки иначе по самой кнопке
     debug: true, // вывод отладочной информации
     keyCode: {
-      showQuestion: 81, // код кнопки при нажатии на которую активируется вопрос
-      hideQuestion: 87, // код кнопки при нажатии на которую скрывается вопрос
+      showQuestion: 33, // код кнопки при нажатии на которую активируется вопрос
+      hideQuestion: 34, // код кнопки при нажатии на которую скрывается вопрос
     },
     panelClass: 'gclient__toolbar',
     indicatorClass: 'questionManagementIndicate',
