@@ -82,20 +82,25 @@ let questionManagement = {
 
   },
 
-  clickEventListener() {
-    questionManagement.evenKeyupHandler(event)
+  /**
+   * Перехватчик события
+   * @param event
+   */
+  handleEvent(event) {
+    this.evenKeyupHandler(event)
   },
 
   addHandler() {
-    if (!this.checkClassAtElem(this.getIndicator(), this.settings.indicatorActiveClass)) {
-      document.addEventListener('keyup', questionManagement.clickEventListener);
+    if (!this.checkActiveEventListener()) {
+      document.addEventListener('keyup', this);
       this.addClass(this.getIndicator(), this.settings.indicatorActiveClass);
     }
   },
 
-  removeHandler() {
-    if (this.checkClassAtElem(this.getIndicator(), this.settings.indicatorActiveClass)) {
-      document.removeEventListener('keyup', questionManagement.clickEventListener);
+  removeHandler(event) {
+    event.preventDefault();
+    if (this.checkActiveEventListener()) {
+      document.removeEventListener('keyup', this);
       this.removeClass(this.getIndicator(), this.settings.indicatorActiveClass);
     }
   },
@@ -109,28 +114,30 @@ let questionManagement = {
         this.hide();
         break;
       default:
-        if (this.settings.debug) {
-          console.log('KeyCode: ' + event.keyCode);
-        }
+        console.log('KeyCode: ' + event.keyCode);
     }
   },
 
   show() {
-    if (!this.checkClassAtElem(this.getBtn(), this.settings.showQuestionBtnClass)) {
+    if (!this.checkActiveQuestionBtn()) {
       this.clickBtn(this.getBtn());
-      if (this.settings.debug) {
-        console.log('show: ', this.getBtn());
-      }
+      this.debugPrint('show: ' + this.getBtn().outerHTML);
     }
   },
 
   hide() {
-    if (this.checkClassAtElem(this.getBtn(), this.settings.showQuestionBtnClass)) {
+    if (this.checkActiveQuestionBtn()) {
       this.clickBtn(this.getBtn());
-      if (this.settings.debug) {
-        console.log('hide: ', this.getBtn());
-      }
+      this.debugPrint('hide: ' + this.getBtn().outerHTML);
     }
+  },
+
+  checkActiveEventListener() {
+    return this.checkClassAtElem(this.getIndicator(), this.settings.indicatorActiveClass);
+  },
+
+  checkActiveQuestionBtn() {
+    return this.checkClassAtElem(this.getBtn(), this.settings.showQuestionBtnClass);
   },
 
   checkClassAtElem(elem, className) {
@@ -146,9 +153,9 @@ let questionManagement = {
     elem.addEventListener('click', () => {
       this.addHandler()
     });
-    elem.addEventListener('contextmenu', () => {
-      this.removeHandler()
-    })
+    elem.addEventListener('contextmenu', (event) => {
+      this.removeHandler(event)
+    }, {capture: true})
   },
 
   addClass(elem, className) {
@@ -173,12 +180,18 @@ let questionManagement = {
     }
   },
 
-  addStyleCss(){
+  addStyleCss() {
     let elem = document.createElement('link');
     elem.href = this.settings.cssHref;
     elem.rel = 'stylesheet';
     document.getElementsByTagName('head')[0].appendChild(elem);
-  }
+  },
+
+  debugPrint(message) {
+    if (this.settings.debug) {
+      console.log(message);
+    }
+  },
 };
 
 
