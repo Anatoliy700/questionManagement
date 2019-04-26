@@ -268,7 +268,6 @@ const questionManagement = {
   settings: {
     questionBtnClass: 'question', // класс кнопки по которой нужно кликать для вывода и скрытия вопроса
     showQuestionBtnClass: 'green', // класс, наличие которого говорит что вопрос активирован
-    keyNameLocalStorage: 'questKeyCode', // имя ключа для сохранения в localStorage
     clickByParent: true, // если true то клик происходит по родителю целевой кнопки иначе по самой кнопке
     debug: true, // вывод отладочной информации
     keyCode: {
@@ -315,13 +314,6 @@ const questionManagement = {
       btn.parentNode.click();
     } else {
       btn.click();
-    }
-  },
-
-  setKeyCode() {
-    if (this.settings.keyCode.hideQuestion === null
-      && this.settings.keyCode.showQuestion === null) {
-
     }
   },
 
@@ -389,7 +381,7 @@ const questionManagement = {
   },
 
   addStatusToPanel() {
-    let text = keyCodeService.getName(this.settings.keyCode.showQuestion) + ' /  ' + keyCodeService.getName(this.settings.keyCode.hideQuestion);
+    let text = this.keyCodeService.getName(this.settings.keyCode.showQuestion) + ' /  ' + this.keyCodeService.getName(this.settings.keyCode.hideQuestion);
     let panel = document.getElementsByClassName(this.settings.panelClass)[0].firstElementChild;
     let elem = document.createElement('span');
     elem.innerText = text;
