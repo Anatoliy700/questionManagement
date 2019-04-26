@@ -6,7 +6,16 @@
     margin: auto 0;
     border-radius: 1em;
 }
+.questionManagementIndicate_v2 {
+    height: 1em;
+    background-color: red;
+    margin: auto 0;
+    border-radius: 1em;
+    color: white;
+    padding: 10px;
+}
 
-.questionManagementIndicate.active {
+.questionManagementIndicate.active,
+.questionManagementIndicate_v2.active {
     background-color: #31d731;
 }
